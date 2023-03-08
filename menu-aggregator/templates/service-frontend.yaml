@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "menu-aggregator.fullname" . }}-frontend
+  labels:
+    menuPart: frontend
+    {{- include "menu-aggregator.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.frontendService.type }}
+  ports:
+    - port: {{ .Values.frontendService.port }}
+      targetPort: service
+      protocol: TCP
+      name: http
+  selector:
+    menuPart: frontend
+    {{- include "menu-aggregator.selectorLabels" . | nindent 4 }}
